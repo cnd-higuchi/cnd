@@ -14,7 +14,7 @@
 /*
  * Top Page
  */
-Route::get('/', 'SalesController@three');
+Route::get('/', ['middleware' => 'auth', 'uses' => 'SalesController@three']);
 
 /*
  * login/logout
@@ -26,4 +26,11 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 /*
  * sales
  */
-Route::get('sales/edit/{user_id}', 'SalesController@edit');
+Route::get('sales/edit/{user_id}', ['middleware' => 'auth', 'uses' => 'SalesController@edit']);
+
+/*
+ * timecard
+ */
+Route::get('timecard', ['middleware' => 'auth', 'uses' => 'TimeCardsController@index']);
+Route::get('timecard/register', ['middleware' => 'auth', 'uses' => 'TimeCardsController@getRegister']);
+Route::post('timecard/register', ['middleware' => 'auth', 'uses' => 'TimeCardsController@postRegister']);

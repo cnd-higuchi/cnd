@@ -9,6 +9,7 @@ use Faker\Factory as Faker;
 use Carbon\Carbon;
 use App\SalesData;
 use App\User;
+use App\TimeCard;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(UsersTableSeeder::class);
+        $this->call(TimeCardsTableSeeder::class);
         $this->call(SalesDataTableSeeder::class);
 
         Model::reguard();
@@ -32,7 +34,7 @@ class UsersTableSeeder extends Seeder
 {
 	public function run()
 	{
-		DB::table('users')->delete();
+		DB::table('users')->truncate();
 		User::create([
 			'name' => 'c-system',
 			'email' => 'c-system@cn-door.com',
@@ -41,11 +43,35 @@ class UsersTableSeeder extends Seeder
 	}
 }
 
+class TimeCardsTableSeeder extends Seeder
+{
+	public function run()
+	{
+		DB::table('time_cards')->truncate();
+
+		$faker = Faker::create('ja_JP');
+
+		for ($i = 1; $i < 11; $i++) {
+			$bgntime = '2015-7-'.$i.' 9:00:00';
+			$endtime = '2015-7-'.$i.' 18:00:00';
+			TimeCard::create([
+				'user_id' => '2',
+				'type' => '1',
+				'bgn_time' => $bgntime,
+				'end_time' => $endtime,
+				'bgn_stamp_time' => $bgntime,
+				'end_stamp_time' => $endtime,
+			]);
+		}
+	}
+}
+
+
 class SalesDataTableSeeder extends Seeder
 {
 	public function run()
 	{
-		DB::table('sales_data')->delete();
+		DB::table('sales_data')->truncate();
 
 		$faker = Faker::create('ja_JP');
 
@@ -58,7 +84,6 @@ class SalesDataTableSeeder extends Seeder
 				'project_name' => $faker->lastname(),
 				'sales' => 10000*($i+1),
 				'suppliers' => 1000*($i+1),
-				'gross_profit' => 9000*($i+1),
 				'fix' => '0',
 				'del_flg' => '0',
 			]);

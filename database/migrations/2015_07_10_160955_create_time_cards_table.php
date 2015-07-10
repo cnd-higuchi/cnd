@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSalesDataTable extends Migration
+class CreateTimeCardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,18 +12,14 @@ class CreateSalesDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales_data', function (Blueprint $table) {
+        Schema::create('time_cards', function (Blueprint $table) {
             $table->increments('id');
 			$table->integer('user_id');
-			$table->timestamp('sales_date');
-			$table->string('client_name');
-			$table->integer('status');
-			$table->string('project_name');
-			$table->double('sales');
-			$table->double('suppliers');
-			$table->string('token');
-			$table->integer('fix');
-			$table->integer('del_flg');
+			$table->integer('type');
+			$table->timestamp('bgn_time');
+			$table->timestamp('end_time');
+			$table->timestamp('bgn_stamp_time');
+			$table->timestamp('end_stamp_time');
             $table->timestamps();
         });
     }
@@ -35,6 +31,6 @@ class CreateSalesDataTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sales_data');
+        Schema::drop('time_cards');
     }
 }
