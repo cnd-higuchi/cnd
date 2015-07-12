@@ -158,6 +158,11 @@ return [
     	 * For Flash Message
     	 */
     	Laracasts\Flash\FlashServiceProvider::class,
+
+	/*
+	 * For Presenter
+	 */
+	Robbo\Presenter\PresenterServiceProvider::class,
     ],
 
     /*
